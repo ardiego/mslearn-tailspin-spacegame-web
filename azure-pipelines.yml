@@ -1,23 +1,21 @@
 trigger:
-  - '*'
-  
+- '*'
+
 pool:
   vmImage: 'ubuntu-16.04'
   demands:
-  - npm
-  
+    - npm
 variables:
   buildConfiguration: 'Release'
   wwwrootDir: 'Tailspin.SpaceGame.Web/wwwroot'
   dotnetSdkVersion: '3.1.100'
-  
+
 steps:
-- task: UseDotNet@2
+- task: DotNetCoreInstaller@0
   displayName: 'Use .NET Core SDK $(dotnetSdkVersion)'
   inputs:
-    packageType: sdk
     version: '$(dotnetSdkVersion)'
-  
+
 - task: Npm@1
   displayName: 'Run npm install'
   inputs:
@@ -27,7 +25,8 @@ steps:
   displayName: 'Compile Sass assets'
 
 - task: gulp@1
-  displayName: 'Run gulp tarea'
+  displayName: 'Run gulp tasks'
+
 
 - script: 'echo "$(Build.DefinitionName), $(Build.BuildId), $(Build.BuildNumber)" > buildinfo.txt'
   displayName: 'Write build info'
