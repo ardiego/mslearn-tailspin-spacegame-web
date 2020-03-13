@@ -24,10 +24,11 @@ steps:
     publishTestResults: true
     projects: '**/*.Tests.csproj'
 
-- script: $(Build.SourcesDirectory)
-    displayName: 'Run a one-lien scribt'
+- bash: ls -R $(Build.SourcesDirectory)
 
-- bash: ls -R $(System.DefaultWorkingDirectory)
+- script: |
+    reportgenerator -reports:$(Build.SourcesDirectory)/**/coverage.cobertura.xml -targetdir:$(Build.SourcesDirectory)/CodeCoverage -reporttypes:HtmlInline_AzurePipelines
+  displayName: 'Create code coverage report'
 
 - task: PublishCodeCoverageResults@1
   displayName: 'Publish code coverage report'
