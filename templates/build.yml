@@ -15,20 +15,12 @@ steps:
     command: custom
     custom: tool
     arguments: 'install --global dotnet-reportgenerator-globaltool'
-#original
-# - task: DotNetCoreCLI@2
-#   displayName: 'Run unit tests - ${{parameters.buildConfiguration}}'
-#   inputs:
-#     command: 'test'
-#     arguments: '--no-build --configuration ${{parameters.buildConfiguration}}'
-#     publishTestResults: true
-#     projects: '**/*.Tests.csproj'
-#para code coverage
+
 - task: DotNetCoreCLI@2
   displayName: 'Run unit tests - ${{parameters.buildConfiguration}}'
   inputs:
     command: 'test'
-    arguments: '--no-build --configuration ${{parameters.buildConfiguration}} /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=$(Build.SourcesDirectory)/TestResults/Coverage/'
+    arguments: '--no-build --configuration ${{parameters.buildConfiguration}}'
     publishTestResults: true
     projects: '**/*.Tests.csproj'
 
